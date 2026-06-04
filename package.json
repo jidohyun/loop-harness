@@ -1,0 +1,36 @@
+{
+  "name": "loop-harness",
+  "version": "0.1.0",
+  "description": "Hybrid-session-first personal Research/Plan/Implement/Verify loop harness.",
+  "type": "module",
+  "bin": {
+    "loop-harness": "./bin/loop-harness.ts"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "bun run bin/loop-harness.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "qa": "bun test && tsc --noEmit && biome check ."
+  },
+  "dependencies": {
+    "commander": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "@types/bun": "latest",
+    "typescript": "latest"
+  },
+  "keywords": [
+    "agent",
+    "harness",
+    "workflow",
+    "cli"
+  ],
+  "license": "MIT"
+}
