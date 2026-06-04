@@ -1,5 +1,7 @@
 # loop-harness
 
+[한국어 README](./README.ko.md) | [English](./README.md)
+
 **Recommand: install this as an agent-local CLI when you want every task to start with a durable Research → Plan → Implement → Verify loop.**
 
 `loop-harness` is a standalone TypeScript CLI for agent workflows. It gives an agent a small, repo-neutral harness that records what stage the work is in, where it should stop for permission, and what evidence was produced.
