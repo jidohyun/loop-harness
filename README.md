@@ -19,30 +19,32 @@ The state lives in the current working directory under `.omo/loop-harness/`, so 
 
 ## Recommended agent install
 
-Use this when installing for a coding agent or local autonomous workflow. It keeps the package outside any project repo and exposes a stable `loop-harness` command on `PATH`.
+Paste this block into your coding agent. The agent can run it as-is; it installs or updates `loop-harness`, links the command, and runs a smoke test.
 
-```sh
-mkdir -p ~/.local/share ~/.local/bin
-git clone https://github.com/jidohyun/loop-harness.git ~/.local/share/loop-harness
-cd ~/.local/share/loop-harness
-bun install --frozen-lockfile
-ln -sf "$PWD/bin/loop-harness.ts" ~/.local/bin/loop-harness
-chmod +x bin/loop-harness.ts
+```text
+Install loop-harness for me. Run this exact command, then verify that `loop-harness status --json` works from a temp directory:
+
+bash -lc 'curl -fsSL https://raw.githubusercontent.com/jidohyun/loop-harness/main/scripts/install-agent.sh | bash'
 ```
 
-If `~/.local/bin` is not already on `PATH`:
+If you are installing it yourself instead of through an agent, run the same command directly:
+
+```sh
+bash -lc 'curl -fsSL https://raw.githubusercontent.com/jidohyun/loop-harness/main/scripts/install-agent.sh | bash'
+```
+
+The installer is idempotent:
+
+- clones or fast-forwards `https://github.com/jidohyun/loop-harness.git`
+- installs Bun automatically if `bun` is missing
+- runs `bun install --frozen-lockfile`
+- links `~/.local/bin/loop-harness`
+- verifies `start` and `status` in a temp workspace
+
+If `~/.local/bin` is not already on `PATH`, add it:
 
 ```sh
 export PATH="$HOME/.local/bin:$PATH"
-```
-
-Smoke test from any workspace:
-
-```sh
-mkdir -p /tmp/loop-harness-demo
-cd /tmp/loop-harness-demo
-loop-harness start --task "demo" --json
-loop-harness status --json
 ```
 
 ## What it does

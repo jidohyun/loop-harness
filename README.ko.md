@@ -19,30 +19,32 @@
 
 ## 에이전트용 추천 설치 방법
 
-코딩 에이전트나 로컬 autonomous workflow에 설치할 때 이 방식을 권장합니다. 패키지는 프로젝트 repo 밖에 두고, 안정적인 `loop-harness` 명령만 `PATH`에 노출합니다.
+아래 블록을 본인 코딩 에이전트에게 그대로 붙여 넣으세요. 에이전트가 그대로 실행하면 `loop-harness`를 설치 또는 업데이트하고, 명령을 링크하고, smoke test까지 수행합니다.
 
-```sh
-mkdir -p ~/.local/share ~/.local/bin
-git clone https://github.com/jidohyun/loop-harness.git ~/.local/share/loop-harness
-cd ~/.local/share/loop-harness
-bun install --frozen-lockfile
-ln -sf "$PWD/bin/loop-harness.ts" ~/.local/bin/loop-harness
-chmod +x bin/loop-harness.ts
+```text
+loop-harness를 설치해줘. 아래 명령을 정확히 실행한 다음, 임시 디렉터리에서 `loop-harness status --json`이 동작하는지 검증해줘.
+
+bash -lc 'curl -fsSL https://raw.githubusercontent.com/jidohyun/loop-harness/main/scripts/install-agent.sh | bash'
 ```
 
-`~/.local/bin`이 아직 `PATH`에 없다면:
+에이전트가 아니라 직접 설치한다면 같은 명령을 터미널에서 실행하면 됩니다.
+
+```sh
+bash -lc 'curl -fsSL https://raw.githubusercontent.com/jidohyun/loop-harness/main/scripts/install-agent.sh | bash'
+```
+
+설치 스크립트는 idempotent합니다.
+
+- `https://github.com/jidohyun/loop-harness.git`을 clone하거나 fast-forward 업데이트합니다.
+- `bun`이 없으면 자동으로 설치합니다.
+- `bun install --frozen-lockfile`을 실행합니다.
+- `~/.local/bin/loop-harness`를 링크합니다.
+- 임시 작업공간에서 `start`와 `status`를 검증합니다.
+
+`~/.local/bin`이 아직 `PATH`에 없다면 추가하세요.
 
 ```sh
 export PATH="$HOME/.local/bin:$PATH"
-```
-
-아무 작업공간에서 smoke test:
-
-```sh
-mkdir -p /tmp/loop-harness-demo
-cd /tmp/loop-harness-demo
-loop-harness start --task "demo" --json
-loop-harness status --json
 ```
 
 ## 하는 일
